@@ -70,7 +70,11 @@ forces{type=csr_g_to_m
        sigma_rad=20e-6
        sigma_vert=10e-6
       }
-{%- elif cookiecutter.force_type == 'projected' %}
+{%- elif cookiecutter.force_type == '1d' %}
+forces{type=projected
+       sigma_long=relative
+       relative_long=0.1
+      }
 {%- elif cookiecutter.force_type == 'none' %}
 forces{type=none}
 {% endif %}
