@@ -22,6 +22,8 @@ if __name__ == '__main__':
     elif '{{ cookiecutter.model_type == "bc" }}':
         FILES["zeuthen"].unlink()
         FILES["bc"].rename(TARGET)
-
     else:
         sys.exit(1)
+
+    (Path(PROJECT_DIRECTORY) / "in").mkdir()
+    (Path(PROJECT_DIRECTORY) / "out").mkdir()
