@@ -1,0 +1,7 @@
+{
+    "model_type": ["zeuthen", "bc"],
+    "force_type": ["csr_g_to_m", "projected", "none"],
+    "input_distribution": "input.fmt1",
+    "directory_suffix": "",
+    "directory_name": "{{ cookiecutter.model_type }}{{ cookiecutter.directory_suffix }}"
+}
