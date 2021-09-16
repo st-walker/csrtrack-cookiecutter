@@ -1,5 +1,5 @@
 {
-    "model_type": ["zeuthen", "bc"],
+    "model_type": ["zeuthen", "bc", "esase"],
     "force_type": ["csr_g_to_m", "1d", "none"],
     "input_distribution": "input.fmt1",
     "directory_suffix": "",
