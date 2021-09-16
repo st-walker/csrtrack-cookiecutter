@@ -1,0 +1,103 @@
+io_path{input =in,output=out,logfile=log.txt}
+!---------------------------------------------------
+! 4 magnet bunch compressor
+!---------------------------------------------------
+lattice{
+        dipole  ! 1st dipole
+              {position{rho=0.0,psi=0.0,marker=d1a}
+               properties{r=-72.72478259178753}
+               position{rho=0.6,psi=0.0,marker=d1b}
+              }
+        dipole  ! 2nd dipole
+              {position{rho=1.6,psi=0.0,marker=d2a}
+               properties{r=72.72478259178753}
+               position{rho=2.2,psi=0.0,marker=d2b}
+              }
+        dipole  ! 3rd dipole
+              {position{rho=2.6,psi=0.0,marker=d3a}
+               properties{r=72.72478259178753}
+               position{rho=3.2,psi=0.0,marker=d3b}
+              }
+        dipole  ! 4th dipole
+              {position{rho=4.2,psi=0.0,marker=d4a}
+               properties{r=-72.72478259178753}
+               position{rho=4.8,psi=0.0,marker=d4b}
+              }
+       }
+
+!---------------------------------------------------
+! particle distribution
+!---------------------------------------------------
+particles{reference_momentum  =reference_particle
+          reference_point_x   =0.0
+          reference_point_y   =0.0
+          reference_point_phi =0.0
+          format=fmt1,array=#file{name=esase-with-chirp-primaries.fmt1}
+         }
+
+!---------------------------------------------------
+! online monitors
+!---------------------------------------------------
+online_monitor{name=sub_bunch.dat,type=subbunch
+               start_time_c0=now
+               end_time_marker=d4b,end_time_shift_c0=2.0
+               time_step_c0=all
+              }
+online_monitor{name=steps.dat,type=steps
+               start_time_c0=now
+               end_time_marker=d4b,end_time_shift_c0=2.0
+               time_step_c0=all
+              }
+online_monitor{name=p1.fmt3,type=phase,format=fmt3,particle=1
+               start_time_c0=now
+               end_time_marker=d4b,end_time_shift_c0=1.0
+               time_step_c0=all
+              }
+online_monitor{name=x.fmt3,type=phase,format=fmt3,particle=all
+               start_time_c0=now
+               end_time_marker=d4b,end_time_shift_c0=1.0
+               time_step_c0=0.10
+              }
+
+!---------------------------------------------------
+! force definition
+!---------------------------------------------------
+{%- if cookiecutter.force_type == 'csr_g_to_m' %}
+forces{type=csr_g_to_m
+       shape=ellipsoid
+       sigma_long=20e-6
+       sigma_rad=20e-6
+       sigma_vert=10e-6
+      }
+{%- elif cookiecutter.force_type == '1d' %}
+forces{type=projected
+       sigma_long=relative
+       relative_long=0.1
+      }
+{%- elif cookiecutter.force_type == 'none' %}
+forces{type=none}
+{% endif %}
+!---------------------------------------------------
+! tracking
+!---------------------------------------------------
+  track_step{precondition=yes
+             iterative=2
+             error_per_ct=0.001
+             error_weight_momentum=0.0
+
+             ct_step_min=0.02
+             ct_step_max=0.10
+             ct_step_first=0.10
+             increase_factor=1.5
+             arc_factor=0.3
+             duty_steps=yes
+            }
+
+  tracker{end_time_marker=d4b,end_time_shift_c0=2.00}
+
+!---------------------------------------------------
+! offline monitors
+!---------------------------------------------------
+monitor{format=fmt1,name=end.fmt1}
+
+exit

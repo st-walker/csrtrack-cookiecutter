@@ -7,6 +7,6 @@
 source /etc/profile.d/modules.sh
 module load mpi/openmpi-x86_64-intel
 date
-mpirun /home/meykopff/bin/csrtrack_intel_openmpi_1.205
+mpirun /usr/bin/time -p /home/meykopff/bin/csrtrack_intel_openmpi_1.205
 date
 exit
