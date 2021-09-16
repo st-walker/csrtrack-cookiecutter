@@ -10,7 +10,7 @@ PROJECT_DIRECTORY = Path(os.path.realpath(os.path.curdir))
 
 
 FILES = {"zeuthen": PROJECT_DIRECTORY / Path("zeuthen-csrtrk.in"),
-         "bc": PROJECT_DIRECTORY / Path("bc-csrtrk.in")
+         "bc": PROJECT_DIRECTORY / Path("bc-csrtrk.in"),
          "esase": PROJECT_DIRECTORY / Path("esase-csrtrk.in")
          }
 
